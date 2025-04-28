@@ -27,3 +27,14 @@ An example of how to use the Vector library can be found in `test.c`. To compile
 ```bash
 make
 ```
+To change the type stored in the vectors (to e.g. char), type:
+```c
+#define VECTOR_TYPE char
+```
+before including the header file.
+
+To change the step by which to expand the vector when it runs out of memory, type:
+```c
+#define REALLOC_STEP 16
+```
+before including the header file.

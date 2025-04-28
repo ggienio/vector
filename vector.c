@@ -14,7 +14,7 @@ vector *vec_new(int len) {
         return NULL;
     }
 
-    vec->elements = malloc(len * sizeof(TYPE));
+    vec->elements = malloc(len * sizeof(VECTOR_TYPE));
 
     if (vec->elements == NULL) {
         free(vec);
@@ -31,13 +31,13 @@ bool vec_out_of_bounds(vector *vec, int index) {
     return index >= vec->len || index < 0;
 }
 
-int vec_append(vector *vec, TYPE element) {
+int vec_append(vector *vec, VECTOR_TYPE element) {
     if (vec == NULL) {
         return -1;
     }
 
     if (vec->allocated <= vec->len) {
-        TYPE *new_elements = realloc(vec->elements, (vec->allocated + REALLOC_STEP) * sizeof(TYPE));
+        VECTOR_TYPE *new_elements = realloc(vec->elements, (vec->allocated + REALLOC_STEP) * sizeof(VECTOR_TYPE));
         if (vec->elements == NULL) {
             return -1;
         }
@@ -50,7 +50,7 @@ int vec_append(vector *vec, TYPE element) {
     return 0;
 }
 
-int vec_get(vector *vec, int index, TYPE *result) {
+int vec_get(vector *vec, int index, VECTOR_TYPE *result) {
     if (vec == NULL || vec_out_of_bounds(vec, index)) {
         return -1;
     }
@@ -59,7 +59,7 @@ int vec_get(vector *vec, int index, TYPE *result) {
     return 0;
 }
 
-int vec_set(vector *vec, int index, TYPE value) {
+int vec_set(vector *vec, int index, VECTOR_TYPE value) {
     if (vec == NULL || vec_out_of_bounds(vec, index)) {
         return -1;
     }
@@ -68,7 +68,7 @@ int vec_set(vector *vec, int index, TYPE value) {
     return 0;
 }
 
-int vec_insert(vector *vec, int index, TYPE value) {
+int vec_insert(vector *vec, int index, VECTOR_TYPE value) {
     if (vec == NULL || vec_out_of_bounds(vec, index)) {
         return -1;
     }
@@ -80,7 +80,7 @@ int vec_insert(vector *vec, int index, TYPE value) {
     }
 
     for (int i = vec->len - 2; i >= index; i--) {
-        TYPE temp;
+        VECTOR_TYPE temp;
         int get_result = vec_get(vec, i, &temp);
         int set_result = vec_set(vec, i + 1, temp);
         if (get_result + set_result != 0) {
@@ -102,7 +102,7 @@ int vec_pop(vector *vec, int index) {
     }
 
     for (int i = index + 1; i < vec->len; i++) {
-        TYPE temp;
+        VECTOR_TYPE temp;
         int get_result = vec_get(vec, i, &temp);
         int set_result = vec_set(vec, i - 1, temp);
         if (get_result + set_result != 0) {
@@ -114,7 +114,7 @@ int vec_pop(vector *vec, int index) {
     vec->len--;
 
     if (vec->allocated - vec->len >= REALLOC_STEP) {
-        TYPE *new_elements = realloc(vec->elements, (vec->allocated - REALLOC_STEP) * sizeof(TYPE));
+        VECTOR_TYPE *new_elements = realloc(vec->elements, (vec->allocated - REALLOC_STEP) * sizeof(VECTOR_TYPE));
         if (new_elements == NULL) {
             return -1;
         }
@@ -131,8 +131,8 @@ int vec_reverse(vector *vec) {
     }
 
     for (int i = 0; i < vec->len / 2; i++) {
-        TYPE r_temp;
-        TYPE l_temp;
+        VECTOR_TYPE r_temp;
+        VECTOR_TYPE l_temp;
         int get_result1 = vec_get(vec, vec->len - 1 - i, &r_temp);
         int get_result2 = vec_get(vec, i, &l_temp);
         int set_result1 = vec_set(vec, vec->len - 1 - i, l_temp);
@@ -153,17 +153,17 @@ int vec_print(vector *vec) {
     printf("[");
 
     for (int i = 0; i < vec->len; i++) {
-        TYPE value;
-        TYPE result = vec_get(vec, i, &value);
+        VECTOR_TYPE value;
+        VECTOR_TYPE result = vec_get(vec, i, &value);
         if (result == -1) {
             return -1;
         }
 
-        #if TYPE==int
+        #if VECTOR_TYPE==int
             printf("%d", value);
-        #elif TYPE==double || TYPE==float
+        #elif VECTOR_TYPE==double || VECTOR_TYPE==float
             printf("%f", value);
-        #elif TYPE==char
+        #elif VECTOR_TYPE==char
             printf("%c", value);
         #endif
 
@@ -186,7 +186,7 @@ int vec_shrink(vector *vec) {
         return 0;
     }
     
-    TYPE *new_elements = realloc(vec->elements, (vec->len) * sizeof(TYPE));
+    VECTOR_TYPE *new_elements = realloc(vec->elements, (vec->len) * sizeof(VECTOR_TYPE));
     
     if (new_elements == NULL) {
         return -1;

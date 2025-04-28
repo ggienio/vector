@@ -1,8 +1,19 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#define TYPE int // type stored in the vectors
-#define REALLOC_STEP 4 // how much elements to expand the vector by when it runs out of space
+/* VECTOR_TYPE
+ * the type stored in the vectors
+ */
+#ifndef VECTOR_TYPE
+#define VECTOR_TYPE int 
+#endif
+
+/* REALLOC_STEP
+ * how much elements to expand the vector by when it runs out of space
+ */
+#ifndef REALLOC_STEP
+#define REALLOC_STEP 4 
+#endif
 
 /* vector
  * @param len number of elements in the vector
@@ -12,7 +23,7 @@
 typedef struct {
     int len;
     int allocated;
-    TYPE *elements;
+    VECTOR_TYPE *elements;
 } vector;
 
 /* vec_new creates a new vector of the specified length
@@ -26,7 +37,7 @@ vector *vec_new(int len);
  * @param element int to append
  * @return 0 if successful, -1 otherwise
  */
-int vec_append(vector *vec, TYPE element);
+int vec_append(vector *vec, VECTOR_TYPE element);
 
 /* vec_get retrieves the element at the specified index
  * @param vec vector to in question
@@ -34,7 +45,7 @@ int vec_append(vector *vec, TYPE element);
  * @param result pointer to store the retrieved value in
  * @return 0 if successful, NULL otherwise
  */
-int vec_get(vector *vec, int index, TYPE *result);
+int vec_get(vector *vec, int index, VECTOR_TYPE *result);
 
 /* vec_set sets the element at the specified index to the specified value
  * @param vec the vector
@@ -42,7 +53,7 @@ int vec_get(vector *vec, int index, TYPE *result);
  * @param value the value to set
  * @return 0 if successful, -1 otherwise
  */
-int vec_set(vector *vec, int index, TYPE value);
+int vec_set(vector *vec, int index, VECTOR_TYPE value);
 
 /* vec_insert shifts all elements starting from the specified index by 1 and sets the element at the specified index to the specified value
  * @param vec the vector
@@ -50,7 +61,7 @@ int vec_set(vector *vec, int index, TYPE value);
  * @param value the value to set
  * @return 0 if successful, -1 otherwise
  */
-int vec_insert(vector *vec, int index, TYPE value);
+int vec_insert(vector *vec, int index, VECTOR_TYPE value);
 
 /* vec_insert shifts all elements starting from the specified index by -1 (essentially removing the element at the specified index)
  * @param vec the vector
