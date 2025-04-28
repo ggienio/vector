@@ -37,12 +37,12 @@ int vec_append(vector *vec, VECTOR_TYPE element) {
     }
 
     if (vec->allocated <= vec->len) {
-        VECTOR_TYPE *new_elements = realloc(vec->elements, (vec->allocated + REALLOC_STEP) * sizeof(VECTOR_TYPE));
-        if (vec->elements == NULL) {
+        VECTOR_TYPE *new_elements = realloc(vec->elements, (vec->allocated * REALLOC_FACTOR) * sizeof(VECTOR_TYPE));
+        if (new_elements == NULL) {
             return -1;
         }
         vec->elements = new_elements;
-        vec->allocated += REALLOC_STEP;
+        vec->allocated *= REALLOC_FACTOR;
     }
 
     vec->elements[vec->len] = element;
@@ -110,17 +110,7 @@ int vec_pop(vector *vec, int index) {
         }
     }
 
-    // shrink the allocated space if needed
     vec->len--;
-
-    if (vec->allocated - vec->len >= REALLOC_STEP) {
-        VECTOR_TYPE *new_elements = realloc(vec->elements, (vec->allocated - REALLOC_STEP) * sizeof(VECTOR_TYPE));
-        if (new_elements == NULL) {
-            return -1;
-        }
-        vec->elements = new_elements;
-        vec->allocated -= REALLOC_STEP;
-    }
 
     return 0;
 }
@@ -154,8 +144,7 @@ int vec_print(vector *vec) {
 
     for (int i = 0; i < vec->len; i++) {
         VECTOR_TYPE value;
-        VECTOR_TYPE result = vec_get(vec, i, &value);
-        if (result == -1) {
+        if (vec_get(vec, i, &value) == -1) {
             return -1;
         }
 

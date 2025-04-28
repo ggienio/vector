@@ -8,11 +8,12 @@
 #define VECTOR_TYPE int 
 #endif
 
-/* REALLOC_STEP
- * how much elements to expand the vector by when it runs out of space
+/* REALLOC_FACTOR
+ * how much to expand the vector by when it runs out of space
+ * the value must be a positive integer
  */
-#ifndef REALLOC_STEP
-#define REALLOC_STEP 4 
+#ifndef REALLOC_FACTOR
+#define REALLOC_FACTOR 2
 #endif
 
 /* vector

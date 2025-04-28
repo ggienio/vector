@@ -33,8 +33,8 @@ To change the type stored in the vectors (to e.g. char), type:
 ```
 before including the header file.
 
-To change the step by which to expand the vector when it runs out of memory, type:
+To change the factor by which to expand the vector when it runs out of memory, type:
 ```c
-#define REALLOC_STEP 16
+#define REALLOC_FACTOR 3
 ```
 before including the header file.
