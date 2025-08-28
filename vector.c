@@ -4,13 +4,13 @@
 #include "vector.h"
 
 vector *vec_new(int len) {
-    vector *vec = malloc(sizeof(vector));
-    
-    if (vec == NULL) {
+    if (len < 1) {
         return NULL;
     }
 
-    if (len < 1) {
+    vector *vec = malloc(sizeof(vector));
+    
+    if (vec == NULL) {
         return NULL;
     }
 
